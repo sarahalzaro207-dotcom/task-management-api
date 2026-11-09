@@ -1,5 +1,7 @@
 const { v4: uuidv4 } = require('uuid');
 const { readTasks, writeTasks, withLock } = require('../utils/file.utils');
+
+
 //after replacing getAll fun 
 async function getAll(query = {}) {
   let tasks = await readTasks();
@@ -129,6 +131,23 @@ async function remove(id) {
   });
 }
 
-module.exports = { getAll, getById, create, update, remove };
+async function getStats() {
+  const tasks = await readTasks();
+
+  const stats = {
+    total: tasks.length,
+    byStatus: { pending: 0, 'in-progress': 0, completed: 0 },
+    byPriority: { low: 0, medium: 0, high: 0 },
+  };
+
+  for (const t of tasks) {
+    if (stats.byStatus[t.status] !== undefined) stats.byStatus[t.status] += 1;
+    if (stats.byPriority[t.priority] !== undefined) stats.byPriority[t.priority] += 1;
+  }
+
+  return stats;
+}
+module.exports = { getAll, getById, create, update, remove, getStats };
+//module.exports = { getAll, getById, create, update, remove };
 //module.exports = { getAll, getById, create };
 //module.exports = { getAll, getById };

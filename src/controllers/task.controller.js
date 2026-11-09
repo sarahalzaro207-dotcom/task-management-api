@@ -23,6 +23,16 @@ async function getTask(req, res, next) {
   }
 }
 
+//adding this fun here
+async function getStats(req, res, next) {
+  try {
+    const stats = await taskService.getStats();
+    res.status(200).json({ success: true, data: stats });
+  } catch (err) {
+    next(err);
+  }
+}///////////////////////
+
 async function createTask(req, res, next) {
   try {
     const task = await taskService.create(req.body);
@@ -67,12 +77,28 @@ async function deleteTask(req, res, next) {
     next(err);
   }
 }
-
 module.exports = {
   getTasks,
+  getStats,
   getTask,
   createTask,
   updateTask,
   updateTaskStatus,
   deleteTask,
 };
+/*module.exports = {
+  getTasks,
+  getTask,
+  createTask,
+  updateTask,
+  updateTaskStatus,
+  deleteTask,
+};*/
+/*module.exports = {
+  getTasks,
+  getTask,
+  createTask,
+  updateTask,
+  updateTaskStatus,
+  deleteTask,
+};*/

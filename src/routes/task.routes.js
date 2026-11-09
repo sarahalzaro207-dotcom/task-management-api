@@ -8,6 +8,8 @@ const {
 } = require('../middlewares/validate.middleware');
 
 const router = express.Router();
+// this should be before anything else 
+router.get('/stats', controller.getStats);
 
 router.get('/', validateListQuery, controller.getTasks);
 router.post('/', validateCreate, controller.createTask);
