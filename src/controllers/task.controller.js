@@ -1,13 +1,15 @@
+const { matchedData } = require('express-validator');
 const taskService = require('../services/task.service');
 
 async function getTasks(req, res, next) {
   try {
-    const tasks = await taskService.getAll();
-    res.status(200).json({ success: true, data: tasks });
+    const query = matchedData(req, { locations: ['query'] });
+    const { data, pagination } = await taskService.getAll(query);
+    res.status(200).json({ success: true, data, pagination });
   } catch (err) {
     next(err);
   }
-}
+}//replaced gettasks with fun with the above
 
 async function getTask(req, res, next) {
   try {
