@@ -1,0 +1,50 @@
+@base = http://localhost:3000
+
+### Health check
+GET {{base}}/health
+
+### Create a task
+POST {{base}}/api/tasks
+Content-Type: application/json
+
+{
+  "title": "Learn Express.js",
+  "priority": "high",
+  "dueDate": "2026-11-15"
+}
+
+### Create without title (expect 400)
+POST {{base}}/api/tasks
+Content-Type: application/json
+
+{
+  "description": "no title"
+}
+
+### List tasks with filters, search, sort and pagination
+GET {{base}}/api/tasks?status=pending&priority=high&search=express&sortBy=createdAt&order=desc&page=1&limit=10
+
+### Statistics
+GET {{base}}/api/tasks/stats
+
+### Get one task (replace the id)
+GET {{base}}/api/tasks/PUT-A-REAL-ID-HERE
+
+### Update a task (replace the id)
+PUT {{base}}/api/tasks/PUT-A-REAL-ID-HERE
+Content-Type: application/json
+
+{
+  "title": "Learn Express deeply"
+}
+
+### Update only the status (replace the id)
+PATCH {{base}}/api/tasks/PUT-A-REAL-ID-HERE/status
+Content-Type: application/json
+
+{
+  "status": "completed"
+}
+
+### Delete a task (replace the id)
+DELETE {{base}}/api/tasks/PUT-A-REAL-ID-HERE
