@@ -1,7 +1,7 @@
 const express = require('express');
 const cors = require('cors');
 const morgan = require('morgan');
-const taskRoutes = require('./routes/task.routes');   // <- must be here
+const taskRoutes = require('./routes/task.routes');   
 const { notFound, errorHandler } = require('./middlewares/error.middleware');
 
 const app = express();
@@ -14,9 +14,9 @@ app.get('/health', (req, res) => {
   res.status(200).json({ success: true, data: { status: 'ok' } });
 });
 
-app.use('/api/tasks', taskRoutes);                     // <- must be here
+app.use('/api/tasks', taskRoutes);                    
 
 app.use(notFound);
 app.use(errorHandler);
 
-module.exports = app;                                  // <- and this stays LAST
+module.exports = app;                                  
